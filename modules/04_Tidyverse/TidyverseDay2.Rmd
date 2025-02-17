@@ -26,7 +26,16 @@ surveys <- read_csv("diversity.csv")
 surveys2 <- group_by(surveys, sex) 
 surveys3 <- summarize(surveys2, mean_weight = mean(weight, na.rm = TRUE))
 
+head(surveys)
+head(surveys2)
+head(surveys3)
 
+```
+
+```{r}
+for (s in list(surveys,surveys2,surveys3)) {
+  print(head(s))
+}
 ```
 
 ## Dplyr: Selecting columns --------------------------------
@@ -286,6 +295,37 @@ surveys_long <- surveys_wide %>%
   pivot_longer(names_to = "genus", values_to = "mean_weight", cols = -plot_id)
 
 surveys_long
+```
+
+Chunk 33: Loop versus exhaustive individual commands
+
+```{r rbind}
+getwd()
+surveys_1 <- read_csv("diversity_subsets/diversity_1.txt")
+nrow(surveys_1)
+
+surveys_2 <- read_csv("diversity_subsets/diversity_2.txt")
+nrow(surveys_2)
+
+surveys_3 <- read_csv("diversity_subsets/diversity_3.txt")
+nrow(surveys_3)
+
+### have them write the rest up to 10
+
+surveys_combined <- rbind(surveys_1, surveys_2, surveys_3)
+nrow(surveys_combined)
+```
+
+```{r}
+surveys_loop = data.frame() # initialize an empty df
+
+for (i in 1:10) {
+  fname = str_c("diversity_subsets/diversity_", i, ".txt")
+  df = read_csv(fname)
+  surveys_loop = rbind(surveys_loop, df)
+}
+
+nrow(surveys_loop)
 ```
 
 
