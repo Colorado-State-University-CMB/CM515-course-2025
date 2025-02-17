@@ -319,13 +319,12 @@ nrow(surveys_combined)
 ```{r}
 surveys_loop = data.frame() # initialize an empty df
 
-for (i in 1:10) {
-  fname = str_c("diversity_subsets/diversity_", i, ".txt")
-  df = read_csv(fname)
+for (filename in list.files("diversity_subsets", full.names=T)) {
+  df = read_csv(filename) # will print verbose info each time
   surveys_loop = rbind(surveys_loop, df)
 }
 
-nrow(surveys_loop)
+nrow(surveys_loop) # should print the correct number (34786) in the console
 ```
 
 
